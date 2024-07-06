@@ -4,11 +4,11 @@ export const NavigationData = [
     Name: 'Home',
     link: '/home',
   },
-  // {
-  //   id: 1,
-  //   Name: 'News Letter',
-  //   link: '/NewsLetter',
-  // },
+  {
+    id: 1,
+    Name: 'Reporting',
+    link: '/Reporting',
+  },
   // {
   //   id: 2,
   //   Name: 'Club Finder',
@@ -24,4 +24,9 @@ export const NavigationData = [
     Name: 'About Us',
     link: '/aboutus',
   },
+  // {
+  //   id: 5,
+  //   Name: 'News Letter',
+  //   link: '/NewsLetter',
+  // },
 ];

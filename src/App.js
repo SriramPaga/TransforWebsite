@@ -29,7 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/home" element={<LandingPage />} />
-            <Route path="/Form" element={<FormView />} />
+            <Route path="/Reporting" element={<FormView />} />
             <Route path="/Spark" element={<Sparkview />} />
             <Route path="/Login" element={<Home />} />
           </Routes>

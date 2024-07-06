@@ -25,7 +25,7 @@ export default function NavigationBar() {
       >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
+            {/* <span className="sr-only">Your Company</span> */}
             <img className="h-12 w-auto" src={RtrLogo} alt="" />
           </a>
         </div>
