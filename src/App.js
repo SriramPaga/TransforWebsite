@@ -14,6 +14,10 @@ import FormView from './Views/FormView';
 import Login from './Components/Login/Login';
 import FooterSection from './Components/Footer/FooterSection';
 import Futer from './Components/Footer/FooterSection';
+import Home from './Components/SignupSignin/Home';
+
+import UserContext, { UserContexts, useAuth } from './utils/UserContext';
+
 function App() {
   return (
     <>
@@ -27,7 +31,7 @@ function App() {
             <Route path="/home" element={<LandingPage />} />
             <Route path="/Form" element={<FormView />} />
             <Route path="/Spark" element={<Sparkview />} />
-            <Route path="/Login" element={<Login />} />
+            <Route path="/Login" element={<Home />} />
           </Routes>
         </Router>
       </main>
