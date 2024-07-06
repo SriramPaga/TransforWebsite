@@ -1,0 +1,18 @@
+/* @font-face {
+    font-family: "GilroyRegular";
+    src: local("GilroyRegular"),
+      url("./TransformersMovie.ttf") format("");
+    font-weight: normal;
+  } */
+
+
+  @font-face{
+    font-family: 'Transformers'; 
+    /* // Write the name of your custom font. */
+
+/* 
+    // Below you need to give the path of the font, If you have only one format no problem
+    // but if you have more then one format, you can add all those, you just need to
+    // separate these with commas. */
+    src: url('TransformersMovie.ttf') format('ttf');
+}
