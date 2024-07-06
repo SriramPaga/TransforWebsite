@@ -1,6 +1,6 @@
 import React from 'react';
 import { cardData } from '../../Dummydata/CardData';
-import { motion } from 'framer-motion';
+
 import { styled } from 'styled-components';
 
 const CardContainer = styled.div`

@@ -1,7 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+
 import { styled } from 'styled-components';
-import FaqCard from './FaqCard';
+
 import Faqcard2 from './Faqcard2';
 const CustomContainer = styled.div`
   height: 100vh;
@@ -31,7 +31,7 @@ function FaqSection() {
           Here are some quick FAQs to help you navigate through the website.{' '}
         </h6>
       </div>
-      <div className='flex  xs:flex-col md:flex-row gap-2'>
+      <div className="flex  xs:flex-col md:flex-row gap-2">
         <Faqcard2 />
       </div>
     </CustomContainer>

@@ -1,6 +1,5 @@
 import React from 'react';
 import LinksCard from './LinksCard';
-import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
 
 const CustomContainer = styled.div`

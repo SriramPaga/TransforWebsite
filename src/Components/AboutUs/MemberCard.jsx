@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemberData } from '../../Dummydata/MemberData';
 import { styled } from 'styled-components';
-import { motion } from 'framer-motion';
+
 
 const CardContainer = styled.div`
   display: flex;

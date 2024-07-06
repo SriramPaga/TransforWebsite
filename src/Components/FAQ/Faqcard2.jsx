@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import autoAnimate from '@formkit/auto-animate';
+import React, { useState } from 'react';
+
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Faqdata } from '../../Dummydata/Faqdata';
 function Qcard(props) {

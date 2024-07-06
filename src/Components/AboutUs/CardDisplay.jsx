@@ -1,8 +1,7 @@
 import React from 'react';
-import { MemberData } from '../../Dummydata/MemberData';
-import MemberCard2 from './MemberCard2';
+
 import MemberCard from './MemberCard';
-import { ArrowDownLeftIcon } from '@heroicons/react/20/solid';
+
 import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
