@@ -17,6 +17,7 @@ import Futer from './Components/Footer/FooterSection';
 import Home from './Components/SignupSignin/Home';
 
 import UserContext, { UserContexts, useAuth } from './utils/UserContext';
+import ComingSoon from './ComingSoon';
 
 function App() {
   return (
@@ -27,11 +28,14 @@ function App() {
       <main>
         <Router>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/home" element={<LandingPage />} />
+            <Route path="/" element={<ComingSoon />} />
+            {/* <Route path="/home" element={<LandingPage />} /> */}
+            <Route path="/home" element={<ComingSoon />} />
             <Route path="/Reporting" element={<FormView />} />
-            <Route path="/Spark" element={<Sparkview />} />
-            <Route path="/Login" element={<Home />} />
+            {/* <Route path="/Spark" element={<Sparkview />} /> */}
+            <Route path="/Login" element={<ComingSoon />} />
+            <Route path="/aboutus" element={<ComingSoon />} />
+            <Route path="/events" element={<ComingSoon />} />
           </Routes>
         </Router>
       </main>
