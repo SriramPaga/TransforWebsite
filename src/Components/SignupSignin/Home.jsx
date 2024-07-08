@@ -7,11 +7,11 @@ import UserContext from "../../utils/UserContext";
 export default function Home() {
   const user = useAuth();
 //   console.log(user)
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   return (
     <UserContext>
-      {(!user && toggle) && <Signin />}
-       {(!user && !toggle) && <Signup />}
+      {(!user && toggle) && <Signin toggle={setToggle}/>}
+       {(!user && !toggle) && <Signup toggle={setToggle}/>}
 
       {user && <h1>Home Page</h1>}
     </UserContext>
