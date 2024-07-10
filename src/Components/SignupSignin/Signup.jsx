@@ -1,16 +1,16 @@
-import React from "react";
-import { useState } from "react";
-import axios from "axios";
-export default function Signup({toggle}) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+export default function Signup({ toggle }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [phone, setPhone] = useState();
-  const [club, setClub] = useState("");
+  const [club, setClub] = useState('');
 
   async function handlesubmit() {
     const data = await axios.post(
-      "http://localhost:3001/auth/requestCRE",
+      'http://localhost:3001/auth/requestCRE',
       { name, email, password, phone, club },
       {
         withCredentials: true,
@@ -20,14 +20,13 @@ export default function Signup({toggle}) {
 
   return (
     <>
-      
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handlesubmit();
         }}
       >
-        <div className="flex justify-center self-center  z-10">
+        <div className="flex justify-center self-center  z-10 h-screen">
           <div className="p-12 bg-white mx-auto rounded-2xl w-100 ">
             <div className="mb-4">
               <h3 className="font-semibold text-2xl text-gray-800">Sign In </h3>
@@ -108,7 +107,7 @@ export default function Signup({toggle}) {
                     }}
                     className="text-green-400 hover:text-green-500"
                   >
-                   Dont have an Account? Sign-up
+                    Dont have an Account? Sign-up
                   </a>
                 </div>
               </div>
