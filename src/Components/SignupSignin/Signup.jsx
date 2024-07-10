@@ -38,7 +38,7 @@ export default function Signup({ toggle }) {
                   Name
                 </label>
                 <input
-                  onChange={(e) => setEmail(e.target.value)}
+                  // onChange={(e) => setEmail(e.target.value)}
                   className=" w-full text-base px-4 py-2 border  border-gray-300 rounded-lg focus:outline-none focus:border-green-400"
                   type="text"
                   value={name}
