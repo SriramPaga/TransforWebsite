@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { CancelBtn, SubmitBtn } from '../Buttons/FormButtons';
 import {
   LongTextfield,
@@ -8,15 +9,13 @@ import {
   LongTextfieldWithHelper,
   MediaInput,
 } from './TextField';
+import axios from 'axios';
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.currentTarget);
-  const username = formData.get('userName');
-  const email = formData.get('email');
-  const number = formData.get('number');
-  console.log('You eneter. ' + username + email + number);
-};
+// const handleSubmit = (e) => {
+//   e.preventDefault();
+
+//   console.log('You eneter. ' + username + email + number);
+// };
 
 const options = [
   'Club Service',
@@ -37,36 +36,77 @@ const AreaOfFocus = [
   'Child and Mental Heatlh',
   'NA',
 ];
+
 export default function ReportingForm() {
+  const [formDta, setFormDta] = useState({
+    nameOfTheProject: '',
+    eventImage: '',
+    startDate: '',
+    endDate: '',
+    description: '',
+    avenue: '',
+    areaOfFocus: '',
+    totalVolunteerHours: '',
+    nameOfPartner: '',
+    numberOfVolunteers: '',
+    typeofproject: '',
+    totalCashContribution: '',
+    totalInKindContribution: '',
+    fundsRaised: '',
+  });
+  function handleData(e) {
+    const { name, value } = e.target;
+    formDta[name] = value;
+    console.log(name + ' ' + value);
+    console.log(formDta);
+  }
+  async function handlesubmit(e) {
+    const data = await axios
+      .post('http://localhost:3001/report', formDta, {
+        withCredentials: true,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handlesubmit} encType="multipart/form-data">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="mt-10 grid grid-cols-1 gap-x-3 gap-y-4 sm:grid-cols-12">
             <LongTextfield
               label={'Name of the project'}
               placeholder={'Project Name'}
-              name={'userName'}
+              name={'nameOfTheProject'}
               type={'text'}
+              // value={formDta['nameOfTheProject']}
+              handleFn={handleData}
             />
+
             <DateField
               label={'Start Date'}
-              placeholder={'Date'}
-              name={'StartDate'}
+              placeholder={'startDate'}
+              name={'startDate'}
+              handleFn={handleData}
               // type={'Date'}
             />
             <DateField
               label={'End Date'}
-              placeholder={'Date'}
-              name={'EndDate'}
+              placeholder={'endDate'}
+              name={'endDate'}
               // type={'Date'}
+              handleFn={handleData}
             />
             <TextArea
               label={'Description'}
               placeholder={'phoneNumber'}
-              name={'about'}
+              name={'description'}
               rows={4}
               helperText={'Write a description about the project'}
+              handleFn={handleData}
             />
           </div>
         </div>
@@ -80,6 +120,7 @@ export default function ReportingForm() {
               name={'avenue'}
               label={'Avenue'}
               autoComplete={'Avenue-Name'}
+              handleFn={handleData}
             >
               {options.map((opt, i) => {
                 return <option key={i}>{opt}</option>;
@@ -90,6 +131,7 @@ export default function ReportingForm() {
               name={'areaOfFocus'}
               label={'Area Of Focus'}
               autoComplete={'Area Of-Focus'}
+              handleFn={handleData}
             >
               {AreaOfFocus.map((opt, i) => {
                 return <option key={i}>{opt}</option>;
@@ -99,9 +141,10 @@ export default function ReportingForm() {
             <LongTextfieldWithHelper
               label={'Total Volunteer Hours '}
               placeholder={'Volunteer Hours'}
-              name={'VolunteerHours'}
+              name={'totalVolunteerHours'}
               type={'number'}
               autoComplete={'given-text'}
+              handleFn={handleData}
             >
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 Volunteer Hours = Number of Volunteers x Number of Hours Spent
@@ -116,9 +159,10 @@ export default function ReportingForm() {
             <LongTextfieldWithHelper
               label={'Name of Partner(s)'}
               placeholder={'Partner Name'}
-              name={'PartnerName'}
+              name={'nameOfPartner'}
               type={'text'}
               autoComplete={'given-text'}
+              handleFn={handleData}
             >
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 Ex: If it's a joint project/collaboration with Rotaract Club of
@@ -132,15 +176,17 @@ export default function ReportingForm() {
             <ShortTextfield
               label={'Number of Volunteers'}
               placeholder={'number of volunteers'}
-              name={'volunteerNumber'}
+              name={'numberOfVolunteers'}
               type={'number'}
               autoComplete={'given-text'}
+              handleFn={handleData}
             />
 
             <SelectInput
               name={'typeofproject'}
               label={'Type of Project'}
               autoComplete={'Type-of-Project'}
+              handleFn={handleData}
             >
               {ToP.map((opt, i) => {
                 return <option key={i}>{opt}</option>;
@@ -150,29 +196,34 @@ export default function ReportingForm() {
             <ShortTextfield
               label={'Total Cash Contribution (if any)'}
               placeholder={'Cash Contribution'}
-              name={'cashcontribution'}
+              name={'totalCashContribution'}
               type={'number'}
               autoComplete={'given-text'}
+              handleFn={handleData}
             />
 
             <ShortTextfield
               label={'Total in-kind Contribution (if any)'}
               placeholder={'Contribution in kind'}
-              name={'inKindContribution'}
+              name={'totalInKindContribution'}
               type={'text'}
               autoComplete={'given-text'}
+              handleFn={handleData}
             />
             <MediaInput
+              handleFn={handleData}
               label={'Upload at least three(3) relevant images of the project.'}
+              name="eventImage"
             />
             <LongTextfieldWithHelper
               label={
                 'How much Funds were raised through fundraisers and crowd funding? (If any)'
               }
               placeholder={'Funds Raised'}
-              name={'FundsRaised'}
+              name={'fundsRaised'}
               type={'text'}
               autoComplete={'given-text'}
+              handleFn={handleData}
             >
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 This is COMPLETELY OPTIONAL. These details will only help the

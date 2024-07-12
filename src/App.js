@@ -28,7 +28,7 @@ function App() {
       <main>
         <Router>
           <Routes>
-            <Route path="/" element={<ComingSoon />} />
+            <Route path="/" element={<LandingPage />} />
             {/* <Route path="/home" element={<LandingPage />} /> */}
             <Route path="/home" element={<LandingPage />} />
             <Route path="/Reporting" element={<FormView />} />

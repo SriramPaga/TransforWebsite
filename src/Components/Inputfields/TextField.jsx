@@ -20,6 +20,9 @@ export const LongTextfield = (props) => {
             id="first-name"
             autoComplete={props.autoComplete}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            onChange={(e) => {
+              props.handleFn(e);
+            }}
           />
         </div>
       </div>
@@ -44,6 +47,9 @@ export const ShortTextfield = (props) => {
             autoComplete={props.autoComplete}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             required
+            onChange={(e) => {
+              props.handleFn(e);
+            }}
           />
         </div>
       </div>
@@ -67,6 +73,9 @@ export const LongTextfieldWithHelper = (props) => {
             autoComplete={props.autoComplete}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             required
+            onChange={(e) => {
+              props.handleFn(e);
+            }}
           />
         </div>
       </div>
@@ -96,8 +105,11 @@ export const TextArea = (props) => {
             rows={props.rows}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             defaultValue={''}
-            maxLength={10}
-            onChange={charCounter}
+            maxLength={250}
+            onChange={(e) => {
+              charCounter(e);
+              props.handleFn(e);
+            }}
           />
         </div>
         <div className="flex justify-between align-middle">
@@ -132,6 +144,9 @@ export const DateField = (props) => {
             id="first-name"
             autoComplete="given-name"
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            onChange={(e) => {
+              props.handleFn(e);
+            }}
           />
         </div>
       </div>
@@ -166,6 +181,9 @@ export const MediaInput = (props) => {
                 name="file-upload"
                 type="file"
                 className="sr-only"
+                onInput={(e) => {
+                  props.handleFn(e);
+                }}
               />
             </label>
             <p className="pl-1">or drag and drop</p>
@@ -190,6 +208,9 @@ export const SelectInput = (props) => {
           </label>
           <div className="mt-2">
             <select
+              onChange={(e) => {
+                props.handleFn(e);
+              }}
               required
               id={props.id}
               name={props.name}
@@ -224,6 +245,9 @@ export const Checkbox = (props) => {
             <div className="relative flex gap-x-3">
               <div className="flex h-6 items-center">
                 <input
+                  onChange={(e) => {
+                    props.handleFn(e);
+                  }}
                   id="comments"
                   name="comments"
                   type="checkbox"
@@ -242,6 +266,9 @@ export const Checkbox = (props) => {
             <div className="relative flex gap-x-3">
               <div className="flex h-6 items-center">
                 <input
+                  onChange={(e) => {
+                    props.handleFn(e);
+                  }}
                   id="candidates"
                   name="candidates"
                   type="checkbox"
@@ -263,6 +290,9 @@ export const Checkbox = (props) => {
             <div className="relative flex gap-x-3">
               <div className="flex h-6 items-center">
                 <input
+                  onChange={(e) => {
+                    props.handleFn(e);
+                  }}
                   id="offers"
                   name="offers"
                   type="checkbox"
