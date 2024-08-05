@@ -18,7 +18,8 @@ import Home from './Components/SignupSignin/Home';
 
 import UserContext, { UserContexts, useAuth } from './utils/UserContext';
 import ComingSoon from './ComingSoon';
-
+import GridExample from './Components/Grids/GridTest';
+import TestComponents from './TestComponents';
 function App() {
   return (
     <>
@@ -36,12 +37,14 @@ function App() {
             <Route path="/Login" element={<Home />} />
             <Route path="/aboutus" element={<ComingSoon />} />
             <Route path="/events" element={<ComingSoon />} />
+            <Route path="/Dashboard" element={<GridExample />} />
+            <Route path="/TestExtension" element={<TestComponents />} />
           </Routes>
         </Router>
       </main>
-      <footer className="">
+      {/* <footer className="">
         <Futer />
-      </footer>
+      </footer> */}
     </>
   );
 }

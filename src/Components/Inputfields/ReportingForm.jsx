@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CancelBtn, SubmitBtn } from '../Buttons/FormButtons';
 import {
   LongTextfield,
@@ -8,8 +8,11 @@ import {
   ShortTextfield,
   LongTextfieldWithHelper,
   MediaInput,
+  MultiSelectInput,
+  Multiselect,
 } from './TextField';
 import axios from 'axios';
+import MultipleInputField from './MultipleInputField';
 
 // const handleSubmit = (e) => {
 //   e.preventDefault();
@@ -19,7 +22,7 @@ import axios from 'axios';
 
 const options = [
   'Club Service',
-  'Community Service ',
+  'Community Service',
   'International Service ',
   'Professional Development ',
   'Public Relations / Public Image',
@@ -38,13 +41,20 @@ const AreaOfFocus = [
 ];
 
 export default function ReportingForm() {
+  const [showAof, setShowAof] = useState(false);
+  const [selected, setSelected] = useState([]);
+  console.log(selected);
+  useEffect(() => {
+    setFormDta({ ...formDta, avenue: selected });
+  }, [selected]);
+
   const [formDta, setFormDta] = useState({
     nameOfTheProject: '',
     eventImage: '',
     startDate: '',
     endDate: '',
     description: '',
-    avenue: '',
+    avenue: [],
     areaOfFocus: '',
     totalVolunteerHours: '',
     nameOfPartner: '',
@@ -54,11 +64,20 @@ export default function ReportingForm() {
     totalInKindContribution: '',
     fundsRaised: '',
   });
+
+  console.log(formDta);
   function handleData(e) {
     const { name, value } = e.target;
     formDta[name] = value;
-    console.log(name + ' ' + value);
-    console.log(formDta);
+    // formDta.avenue = selected;
+    // console.log(name + ' ' + value);
+    // setFormDta({ ...formDta, avenue: selected });
+    console.log('triggered on avenue');
+    if (formDta.avenue === 'Community Service') {
+      setShowAof(true);
+    } else {
+      setShowAof(false);
+    }
   }
   async function handlesubmit(e) {
     const data = await axios
@@ -72,6 +91,20 @@ export default function ReportingForm() {
         console.log(error);
       });
   }
+
+  const AOFinput = (
+    <SelectInput
+      name={'areaOfFocus'}
+      label={'Area Of Focus'}
+      autoComplete={'Area Of-Focus'}
+      handleFn={handleData}
+    >
+      {AreaOfFocus.map((opt, i) => {
+        return <option key={i}>{opt}</option>;
+      })}
+    </SelectInput>
+  );
+
   return (
     <form onSubmit={handlesubmit} encType="multipart/form-data">
       <div className="space-y-12">
@@ -116,18 +149,24 @@ export default function ReportingForm() {
             Event Details
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-x-3 gap-y-4 sm:grid-cols-12">
-            <SelectInput
+            <MultipleInputField
               name={'avenue'}
               label={'Avenue'}
               autoComplete={'Avenue-Name'}
-              handleFn={handleData}
-            >
-              {options.map((opt, i) => {
-                return <option key={i}>{opt}</option>;
-              })}
-            </SelectInput>
-
-            <SelectInput
+              options={options}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            {/* {options.map((opt, i) => {
+                return (
+                  <option key={i} value={opt}>
+                    {opt}
+                  </option>
+                );
+              })} */}
+            {/* </MultipleInputField> */}
+            {showAof ? AOFinput : <></>}
+            {/* <SelectInput
               name={'areaOfFocus'}
               label={'Area Of Focus'}
               autoComplete={'Area Of-Focus'}
@@ -136,8 +175,7 @@ export default function ReportingForm() {
               {AreaOfFocus.map((opt, i) => {
                 return <option key={i}>{opt}</option>;
               })}
-            </SelectInput>
-
+            </SelectInput> */}
             <LongTextfieldWithHelper
               label={'Total Volunteer Hours '}
               placeholder={'Volunteer Hours'}
@@ -155,7 +193,6 @@ export default function ReportingForm() {
                 Total Volunteers Hours = 5x3 = 15.
               </label>
             </LongTextfieldWithHelper>
-
             <LongTextfieldWithHelper
               label={'Name of Partner(s)'}
               placeholder={'Partner Name'}
@@ -181,7 +218,6 @@ export default function ReportingForm() {
               autoComplete={'given-text'}
               handleFn={handleData}
             />
-
             <SelectInput
               name={'typeofproject'}
               label={'Type of Project'}
@@ -192,7 +228,6 @@ export default function ReportingForm() {
                 return <option key={i}>{opt}</option>;
               })}
             </SelectInput>
-
             <ShortTextfield
               label={'Total Cash Contribution (if any)'}
               placeholder={'Cash Contribution'}
@@ -201,7 +236,6 @@ export default function ReportingForm() {
               autoComplete={'given-text'}
               handleFn={handleData}
             />
-
             <ShortTextfield
               label={'Total in-kind Contribution (if any)'}
               placeholder={'Contribution in kind'}
