@@ -41,16 +41,12 @@ const AreaOfFocus = [
 ];
 
 export default function ReportingForm() {
-  const [showAof, setShowAof] = useState(false);
   const [selected, setSelected] = useState([]);
-  console.log(selected);
-  useEffect(() => {
-    setFormDta({ ...formDta, avenue: selected });
-  }, [selected]);
 
   const [formDta, setFormDta] = useState({
     nameOfTheProject: '',
-    eventImage: '',
+    coverImage: '',
+    supportingImages: [],
     startDate: '',
     endDate: '',
     description: '',
@@ -65,20 +61,33 @@ export default function ReportingForm() {
     fundsRaised: '',
   });
 
-  console.log(formDta);
+  useEffect(() => {
+    setFormDta({ ...formDta, avenue: selected });
+  }, [selected]);
+
+  let showAof = formDta.avenue.includes('Community Service');
+
+  // console.log(showAof)
+  // console.log(formDta.avenue);
+
   function handleData(e) {
     const { name, value } = e.target;
     formDta[name] = value;
-    // formDta.avenue = selected;
-    // console.log(name + ' ' + value);
-    // setFormDta({ ...formDta, avenue: selected });
-    console.log('triggered on avenue');
-    if (formDta.avenue === 'Community Service') {
-      setShowAof(true);
-    } else {
-      setShowAof(false);
-    }
+    const frmdata = new FormData();
+    frmdata.append('image', e.target.files);
+    console.log(typeof(e.target.files));
+    console.log(formDta);
+    
   }
+
+  // const handlesubmitImage = ()=>{
+  //   const formData = new FormData()
+  //   formData.append('image',image)
+  //   console.log(formData);
+
+  //   // axios.post('http://localhost:6969/report/img',formData).then(res=> console.log(res.data))
+  // }
+
   async function handlesubmit(e) {
     const data = await axios
       .post('http://localhost:3001/report', formDta, {
@@ -149,6 +158,7 @@ export default function ReportingForm() {
             Event Details
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-x-3 gap-y-4 sm:grid-cols-12">
+            
             <MultipleInputField
               name={'avenue'}
               label={'Avenue'}
@@ -246,8 +256,18 @@ export default function ReportingForm() {
             />
             <MediaInput
               handleFn={handleData}
-              label={'Upload at least three(3) relevant images of the project.'}
-              name="eventImage"
+              label={'Upload a cover image for the project.'}
+              name="coverImage"
+            />
+            {/* make sure after upload file name is displayed
+            File must be removable and updatable in the frontend before sending to backend, 
+            disable image upload after limit of images is reached */}
+            <MediaInput
+              handleFn={handleData}
+              label={
+                'Upload at least three(3) and utmost five(5) images relevant images of the project.'
+              }
+              name="supportingImages"
             />
             <LongTextfieldWithHelper
               label={

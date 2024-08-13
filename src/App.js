@@ -20,6 +20,7 @@ import UserContext, { UserContexts, useAuth } from './utils/UserContext';
 import ComingSoon from './ComingSoon';
 import GridExample from './Components/Grids/GridTest';
 import TestComponents from './TestComponents';
+import Forgotpassword from './Components/SignupSignin/Forgotpassword';
 function App() {
   return (
     <>
@@ -38,6 +39,12 @@ function App() {
             <Route path="/aboutus" element={<ComingSoon />} />
             <Route path="/events" element={<ComingSoon />} />
             <Route path="/Dashboard" element={<GridExample />} />
+
+            <Route path="passwordreset" element={<Forgotpassword />}>
+              <Route path="profile" element={<Forgotpassword />} />
+              <Route path="account" element={<Forgotpassword />} />
+            </Route>
+            <Route path="/forgotpass" element={<Forgotpassword />} />
             <Route path="/TestExtension" element={<TestComponents />} />
           </Routes>
         </Router>
