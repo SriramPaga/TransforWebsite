@@ -154,9 +154,9 @@ export const DateField = (props) => {
   );
 };
 
-export const MediaInput = (props) => {
+export const SingleMediaInput = (props) => {
   return (
-    <div className="col-span-6">
+    <div className="sm:col-span-6">
       <label
         htmlFor="cover-photo"
         className="block text-sm font-medium leading-6 text-gray-900"
@@ -171,15 +171,57 @@ export const MediaInput = (props) => {
           />
           <div className="mt-4 flex text-sm leading-6 text-gray-600">
             <label
-              htmlFor="fileUpload"
+              htmlFor="singlefileUpload"
               className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
             >
               <span>Upload a file</span>
+
+              <input
+                required
+                id="singlefileUpload"
+                name={props.name}
+                type="file"
+                className="sr-only"
+                onInput={(e) => {
+                  props.handleFn(e);
+                }}
+              />
+            </label>
+            <p className="pl-1">or drag and drop</p>
+          </div>
+          <p className="text-xs leading-5 text-gray-600">PNG, JPG up to 5MB</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+export const MultipleMediaInput = (props) => {
+  return (
+    <div className="sm:col-span-6">
+      <label
+        htmlFor="cover-photo"
+        className="block text-sm font-medium leading-6 text-gray-900"
+      >
+        {props.label}
+      </label>
+      <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+        <div className="text-center">
+          <PhotoIcon
+            className="mx-auto h-12 w-12 text-gray-300"
+            aria-hidden="true"
+          />
+          <div className="mt-4 flex text-sm leading-6 text-gray-600">
+            <label
+              htmlFor="multifileUpload"
+              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+            >
+              <span>Upload a file</span>
+
               <input
                 required
                 multiple
-                id="fileUpload"
-                name="fileUpload"
+                id="multifileUpload"
+                name={props.name}
                 type="file"
                 className="sr-only"
                 onInput={(e) => {

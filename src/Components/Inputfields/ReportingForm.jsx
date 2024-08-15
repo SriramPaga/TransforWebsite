@@ -7,7 +7,8 @@ import {
   SelectInput,
   ShortTextfield,
   LongTextfieldWithHelper,
-  MediaInput,
+  SingleMediaInput,
+  MultipleMediaInput,
   MultiSelectInput,
   Multiselect,
 } from './TextField';
@@ -42,6 +43,8 @@ const AreaOfFocus = [
 
 export default function ReportingForm() {
   const [selected, setSelected] = useState([]);
+  // const [coverimg, setCoverImg] = useState([]);
+  // const [supportimg, setSupportImg] = useState([]);
 
   const [formDta, setFormDta] = useState({
     nameOfTheProject: '',
@@ -66,20 +69,31 @@ export default function ReportingForm() {
   }, [selected]);
 
   let showAof = formDta.avenue.includes('Community Service');
+  const frmdata = new FormData();
 
-  // console.log(showAof)
-  // console.log(formDta.avenue);
+  function handleSingleInput(e) {
+    frmdata.append('image', e.target.files[0]);
+  }
+
+  function handleMultiImgInput(e) {
+    if (e.target.files) {
+      for (let i = 0; i < e.target.files.length; i++) {
+        frmdata.append('image', e.target.files[i]);
+      }
+    }
+  }
 
   function handleData(e) {
     const { name, value } = e.target;
     formDta[name] = value;
-    const frmdata = new FormData();
-    frmdata.append('image', e.target.files);
-    console.log(typeof(e.target.files));
-    console.log(formDta);
-    
   }
 
+  // const filenames = [];
+  // for (let i = 0; i < supportimg.length; i++) {
+  //   filenames.push(supportimg[i].name);
+  // }
+
+  // console.log((files));
   // const handlesubmitImage = ()=>{
   //   const formData = new FormData()
   //   formData.append('image',image)
@@ -89,8 +103,9 @@ export default function ReportingForm() {
   // }
 
   async function handlesubmit(e) {
+    frmdata.append('form', JSON.stringify(formDta));
     const data = await axios
-      .post('http://localhost:3001/report', formDta, {
+      .post('http://localhost:3001/report', frmdata, {
         withCredentials: true,
       })
       .then(function (response) {
@@ -158,7 +173,6 @@ export default function ReportingForm() {
             Event Details
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-x-3 gap-y-4 sm:grid-cols-12">
-            
             <MultipleInputField
               name={'avenue'}
               label={'Avenue'}
@@ -220,6 +234,7 @@ export default function ReportingForm() {
                 external organisation)
               </label>
             </LongTextfieldWithHelper>
+
             <ShortTextfield
               label={'Number of Volunteers'}
               placeholder={'number of volunteers'}
@@ -254,16 +269,26 @@ export default function ReportingForm() {
               autoComplete={'given-text'}
               handleFn={handleData}
             />
-            <MediaInput
-              handleFn={handleData}
+            <SingleMediaInput
+              // multipleImgs={false}
+              handleFn={handleSingleInput}
               label={'Upload a cover image for the project.'}
+              to
               name="coverImage"
             />
-            {/* make sure after upload file name is displayed
-            File must be removable and updatable in the frontend before sending to backend, 
-            disable image upload after limit of images is reached */}
-            <MediaInput
-              handleFn={handleData}
+            <div className="sm:col-span-3">
+              Files Uploaded
+              {/* {filenames.map((name, i) => {
+                return (
+                  <li className="travelcompany-input" key={i}>
+                    {name}
+                  </li>
+                );
+              })} */}
+            </div>
+            <MultipleMediaInput
+              multipleImgs={true}
+              handleFn={handleMultiImgInput}
               label={
                 'Upload at least three(3) and utmost five(5) images relevant images of the project.'
               }
@@ -289,7 +314,7 @@ export default function ReportingForm() {
         </div>
       </div>
       <div className="mt-6 flex items-center justify-center gap-x-6 mx-72 pb-12">
-        <CancelBtn />
+        {/* <CancelBtn /> */}
         <SubmitBtn />
       </div>
     </form>

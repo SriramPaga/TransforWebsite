@@ -19,8 +19,10 @@ import Home from './Components/SignupSignin/Home';
 import UserContext, { UserContexts, useAuth } from './utils/UserContext';
 import ComingSoon from './ComingSoon';
 import GridExample from './Components/Grids/GridTest';
-import TestComponents from './TestComponents';
+// import TestComponents from './TestComponents/TestComponents';
+import Fileupload from './TestComponents/Fileupload';
 import Forgotpassword from './Components/SignupSignin/Forgotpassword';
+
 function App() {
   return (
     <>
@@ -45,7 +47,7 @@ function App() {
               <Route path="account" element={<Forgotpassword />} />
             </Route>
             <Route path="/forgotpass" element={<Forgotpassword />} />
-            <Route path="/TestExtension" element={<TestComponents />} />
+            <Route path="/TestExtension" element={<Fileupload />} />
           </Routes>
         </Router>
       </main>
