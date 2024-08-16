@@ -43,8 +43,9 @@ const AreaOfFocus = [
 
 export default function ReportingForm() {
   const [selected, setSelected] = useState([]);
-  // const [coverimg, setCoverImg] = useState([]);
-  // const [supportimg, setSupportImg] = useState([]);
+  const [coverimg, setCoverImg] = useState([]);
+  const [supportimg, setSupportImg] = useState([]);
+  // const [maxImgs, setMaxImgs] = useState(false);
 
   const [formDta, setFormDta] = useState({
     nameOfTheProject: '',
@@ -72,10 +73,19 @@ export default function ReportingForm() {
   const frmdata = new FormData();
 
   function handleSingleInput(e) {
-    frmdata.append('image', e.target.files[0]);
+    setCoverImg(e.target.files);
+
+    frmdata.append('coverImage', e.target.files[0]);
   }
+  const cvrImgName = [];
+  for (let i = 0; i < coverimg.length; i++) {
+    cvrImgName.push(coverimg[i].name);
+  }
+  // console.log(cvrImgName);
 
   function handleMultiImgInput(e) {
+    setSupportImg(e.target.files);
+
     if (e.target.files) {
       for (let i = 0; i < e.target.files.length; i++) {
         frmdata.append('image', e.target.files[i]);
@@ -83,15 +93,22 @@ export default function ReportingForm() {
     }
   }
 
+  // if (supportimg.length > 5) {
+  //   setMaxImgs(true);
+  // }
+  // function handleResetSupportImgs(e) {
+  //   console.log('reaches reset function');
+  //   setMaxImgs(false);
+  // }
+  const supportImgNames = [];
+  for (let i = 0; i < supportimg.length; i++) {
+    supportImgNames.push(supportimg[i].name);
+  }
+
   function handleData(e) {
     const { name, value } = e.target;
     formDta[name] = value;
   }
-
-  // const filenames = [];
-  // for (let i = 0; i < supportimg.length; i++) {
-  //   filenames.push(supportimg[i].name);
-  // }
 
   // console.log((files));
   // const handlesubmitImage = ()=>{
@@ -104,8 +121,12 @@ export default function ReportingForm() {
 
   async function handlesubmit(e) {
     frmdata.append('form', JSON.stringify(formDta));
+    console.log(formDta);
+    console.log(frmdata.getAll('form'));
+    console.log('IMAGES', frmdata.getAll('image'));
+    console.log('COVER IMAGES', frmdata.getAll('coverImage'));
     const data = await axios
-      .post('http://localhost:3001/report', frmdata, {
+      .post(`${process.env.REACT_APP_BACK_URL}/report`, frmdata, {
         withCredentials: true,
       })
       .then(function (response) {
@@ -130,7 +151,13 @@ export default function ReportingForm() {
   );
 
   return (
-    <form onSubmit={handlesubmit} encType="multipart/form-data">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handlesubmit(e);
+      }}
+      encType="multipart/form-data"
+    >
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="mt-10 grid grid-cols-1 gap-x-3 gap-y-4 sm:grid-cols-12">
@@ -277,15 +304,19 @@ export default function ReportingForm() {
               name="coverImage"
             />
             <div className="sm:col-span-3">
-              Files Uploaded
-              {/* {filenames.map((name, i) => {
-                return (
-                  <li className="travelcompany-input" key={i}>
-                    {name}
-                  </li>
-                );
-              })} */}
+              Cover Image List
+              <div className=" bg-gray-200 p-4 rounded-md">
+                <li className="travelcompany-input">{cvrImgName}</li>
+              </div>
             </div>
+            {/* {maxImgs ? (
+              <div className="sm:col-span-3">
+                Number of Images Limit Crossed
+                <button onClick={() => handleResetSupportImgs()}>
+                  ResetImages
+                </button>
+              </div>
+            ) : ( */}
             <MultipleMediaInput
               multipleImgs={true}
               handleFn={handleMultiImgInput}
@@ -294,6 +325,21 @@ export default function ReportingForm() {
               }
               name="supportingImages"
             />
+            {/* )} */}
+
+            <div className="sm:col-span-3">
+              Files Uploaded
+              <div className=" bg-gray-200 p-4 rounded-md">
+                {supportImgNames.map((name, i) => {
+                  return (
+                    <li className="travelcompany-input" key={i}>
+                      {name}
+                    </li>
+                  );
+                })}
+              </div>
+            </div>
+
             <LongTextfieldWithHelper
               label={
                 'How much Funds were raised through fundraisers and crowd funding? (If any)'
